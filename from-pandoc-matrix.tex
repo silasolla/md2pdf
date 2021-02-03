@@ -1,0 +1,31 @@
+\documentclass[10pt]{jsarticle}
+\usepackage{moreverb}
+\usepackage{amsmath}
+\usepackage{alltt}
+\usepackage[dvipdfmx]{graphicx}
+
+\setlength{\oddsidemargin}{-5mm}  \setlength{\evensidemargin}{-5mm}
+\setlength{\topmargin}{-20mm}      \setlength{\topskip}{0mm}
+\setlength{\textwidth}{170mm}    \setlength{\textheight}{250mm}
+\setlength{\parskip}{0.5\baselineskip}
+
+\newcommand{\MARU}[1]{{\ooalign{\hfil#1\/\hfil\crcr
+                       \raise.167ex\hbox{\mathhexbox20D}}}}
+\newcommand{\dol}{\symbol{'044}}  % $ 疑似タイプ入力
+\newcommand{\lb}{\symbol{'173}}  % { 疑似タイプ入力
+\newcommand{\rb}{\symbol{'175}}  % } 疑似タイプ入力
+\newcommand{\ye}{\symbol{'134}}  % \ 疑似タイプ入力
+\def\Hline{\noalign{\hrule height 0.4mm}}
+
+\def\tightlist{\itemsep1pt\parskip0pt\parsep0pt}
+%-----------------------------------------------------------------
+\begin{document}
+\input{from-pandoc-title}
+
+\input{from-pandoc-author}
+
+\input{from-pandoc-line}
+%-----------------------------------------------------------------
+\input{from-pandoc}
+%-----------------------------------------------------------------
+\end{document}

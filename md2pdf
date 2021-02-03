@@ -1,0 +1,70 @@
+#! /bin/bash
+
+# count args
+if [ $# != 1 ]; then
+   echo "args count error!"
+   exit 1
+fi
+
+# file exist?
+if [ ! -e $1.md ]; then
+    echo "file not found!"
+    exit 1
+fi
+
+read -p "title: " title
+if [ -n "$title" ]; then
+    echo "\hspace*{\fill}{\LARGE\textbf{" $title "}}\hspace*{\fill}" > from-pandoc-title.tex
+    
+    read -p "author: " author
+    if [ -n "$author" ]; then
+	echo "\hspace*{\fill}\begin{tabular}{r}\large\textbf{\today," $author "}" > from-pandoc-author.tex
+	
+	read -p "address: " address
+	if [ -n "$address" ]; then
+	    echo "\\\\\texttt{" $address "}" >> from-pandoc-author.tex
+	fi
+	echo "\end{tabular}" >> from-pandoc-author.tex
+    fi
+    echo "\vspace{1mm}\noindent\hrulefill" > from-pandoc-line.tex
+else
+    touch from-pandoc-title.tex
+    touch from-pandoc-author.tex
+    touch from-pandoc-line.tex
+fi
+
+# md -> tex -> dvi -> pdf
+pandoc $1.md -o from-pandoc.tex
+platex from-pandoc-matrix.tex
+platex from-pandoc-matrix.tex
+dvipdfmx from-pandoc-matrix.dvi
+mv from-pandoc.tex $1.tex
+mv from-pandoc-matrix.pdf $1.pdf
+
+rm from-pandoc-matrix.*
+rm from-pandoc-title.tex
+rm from-pandoc-author.tex
+rm from-pandoc-line.tex
+
+# remove trash
+if [ -e $1.dvi ]; then
+    rm $1.dvi
+fi
+if [ -e $1.toc ]; then
+    rm $1.toc
+fi
+if [ -e $1.log ]; then
+    rm $1.log
+fi
+if [ -e $1.aux ]; then
+    rm $1.aux
+fi
+if [ -e $1.nav ]; then
+    rm $1.nav
+fi
+if [ -e $1.out ]; then
+    rm $1.out
+fi
+if [ -e $1.snm ]; then
+    rm $1.snm
+fi
